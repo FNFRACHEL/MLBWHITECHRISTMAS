@@ -248,23 +248,25 @@ button { font-family: inherit; color: inherit; }
   display: flex; flex-direction: column; align-items: center; gap: 9px;
 }
 
-/* PLAY AGAIN — 메탈릭 핑크. 결과 화면에서 제일 먼저 누르고 싶게 만든다. */
-#s-result .actions .again {
+/* 결과 화면 버튼 — 전부 **흰 진주 바탕**에 빛이 흐른다.
+   화려함 순서: Share on Instagram > PLAY AGAIN > Edit Name·Change Meow */
+#s-result .actions .btn {
   position: relative; overflow: hidden; border: 0; color: #8A2B4F;
-  /* 밝은 쪽으로만 모은 핑크 — 위에서 빛이 들어오고 가운데 흰 띠가 금속처럼 번쩍인다 */
   background: linear-gradient(180deg,
-    #FFFFFF 0%, #FFE2EC 12%, #FFB4D0 34%, #FFF2F7 50%, #FF9FC2 68%, #FFCADF 86%, #FFEFF5 100%);
-  text-shadow: 0 1.5px 0 rgba(255, 255, 255, 0.95);
-  box-shadow: 0 10px 24px rgba(255, 150, 190, 0.55),
-              0 0 0 2px rgba(255, 255, 255, 0.9) inset,
-              0 2px 4px rgba(255, 255, 255, 0.95) inset,
-              0 -3px 8px rgba(255, 158, 196, 0.5) inset;
+    #FFFFFF 0%, #FFFFFF 34%, #FFF1F7 50%, #FFFFFF 64%, #FFF8FB 100%);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.95);
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 1),
+              inset 0 2px 3px rgba(255, 255, 255, 1),
+              inset 0 -3px 8px rgba(255, 216, 232, 0.8),
+              0 6px 16px rgba(226, 98, 140, 0.2);
 }
-/* 금속처럼 빛이 훑고 지나간다 */
-#s-result .actions .again::after {
+
+/* 빛이 훑고 지나가는 띠 (PLAY AGAIN·Share 에만) */
+#s-result .actions .again::after,
+#s-result .actions .save::after {
   content: ''; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.55) 42%,
-              #FFFFFF 50%, rgba(255, 255, 255, 0.55) 58%, transparent 70%);
+  background: linear-gradient(100deg, transparent 28%, rgba(255, 228, 240, 0.9) 40%,
+              #FFFFFF 50%, rgba(255, 228, 240, 0.9) 60%, transparent 72%);
   transform: translateX(-130%); animation: sheen 2.6s ease-in-out infinite;
 }
 @keyframes sheen {
@@ -272,28 +274,53 @@ button { font-family: inherit; color: inherit; }
   88%, 100% { transform: translateX(130%); }
 }
 
-/* SAVE SCORE CARD — 참여에 꼭 필요한 버튼이라 PLAY AGAIN 다음으로 눈에 띄게.
-   반짝임은 넣지 않아 주인공 버튼과 구분된다. */
-#s-result .actions .save {
-  background: linear-gradient(180deg, #FFFFFF 0%, #FFEAF2 26%, #FFC8DE 52%, #FFF4F8 70%, #FFD7E7 100%);
-  color: #96305A; padding: 13px 30px; font-size: 14px; letter-spacing: 0.14em;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
-  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.95),
-              inset 0 -2px 6px rgba(255, 170, 205, 0.6),
-              0 6px 16px rgba(255, 160, 196, 0.45);
+#s-result .actions .again {
+  padding: 14px 36px; font-size: 14px;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 1),
+              inset 0 2px 4px rgba(255, 255, 255, 1),
+              inset 0 -4px 10px rgba(255, 205, 226, 0.9),
+              0 8px 20px rgba(255, 158, 198, 0.5);
+}
+/* 두 번째 띠를 엇갈리게 넣어 더 반짝거린다 */
+#s-result .actions .again::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  background: linear-gradient(80deg, transparent 40%, rgba(255, 255, 255, 0.95) 50%, transparent 60%);
+  transform: translateX(-140%); animation: sheen 2.6s ease-in-out 1.1s infinite;
 }
 
-/* 아래 두 버튼 — 같은 결이되 한참 차분하게 */
+/* Share on Instagram — 가장 밝고 가장 화려하게. 바깥으로 은은한 빛무리까지. */
+#s-result .actions .save {
+  /* 이 화면에서 제일 큰 버튼 — 참여가 여기서 일어난다 */
+  color: #7E2447; letter-spacing: 0.06em; font-size: 16px; padding: 17px 40px; min-width: 66%;
+  background: linear-gradient(180deg,
+    #FFFFFF 0%, #FFF6FA 18%, #FFE4F0 34%, #FFFFFF 50%, #FBE9FF 64%, #FFEBF4 82%, #FFFFFF 100%);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 1),
+              inset 0 2px 5px rgba(255, 255, 255, 1),
+              inset 0 -5px 12px rgba(255, 198, 226, 0.95),
+              0 0 0 1.5px rgba(255, 176, 210, 0.6),
+              0 10px 26px rgba(255, 150, 195, 0.55);
+}
+#s-result .actions .save::before {
+  content: ''; position: absolute; inset: -3px; border-radius: 999px; z-index: -1;
+  background: radial-gradient(closest-side, rgba(255, 168, 206, 0.85), transparent 72%);
+  animation: halo 2.1s ease-in-out infinite;
+}
+@keyframes halo { 0%, 100% { opacity: 0.45; } 50% { opacity: 1; } }
+#s-result .actions .save::after { animation-duration: 2.1s; }
+
+/* 아래 두 버튼 — 같은 흰 바탕, 반짝임 없이 */
 #s-result .actions .btn.ghost {
-  background: linear-gradient(180deg, #FFFFFF 0%, #FFF0F5 40%, #FFDCE9 72%, #FFF6F9 100%);
-  color: #A03E64; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
-  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.95),
-              inset 0 -2px 5px rgba(255, 183, 212, 0.55),
-              0 4px 12px rgba(255, 170, 200, 0.4);
+  color: #A03E64;
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 1),
+              inset 0 -2px 6px rgba(255, 224, 237, 0.9),
+              0 4px 12px rgba(226, 98, 140, 0.16);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  #s-result .actions .again::after { animation: none; opacity: 0; }
+  #s-result .actions .again::after,
+  #s-result .actions .again::before,
+  #s-result .actions .save::after { animation: none; opacity: 0; }
+  #s-result .actions .save::before { animation: none; opacity: 0.6; }
 }
 
 /* ranking */
@@ -427,19 +454,19 @@ button { font-family: inherit; color: inherit; }
   .hero-ride { width: min(230px, 60%); margin: 0; }
   .score { font-size: clamp(34px, 10vw, 46px); }
   .reached { margin-top: 3px; }
-  .cta { margin-top: 6px; padding: 8px 12px 7px; }
+  .cta { margin-top: 5px; padding: 7px 12px 6px; }
   .cta-steps { gap: 2px; margin-top: 5px; }
   .cta-head { padding-bottom: 5px; }
   .cta-foot { margin-top: 5px; }
-  #s-result .actions { margin-top: 10px; gap: 6px; }
-  #s-result .actions .again { padding: 11px 32px; font-size: 14px; }
-  #s-result .actions .save { padding: 9px 24px; font-size: 12.5px; }
+  #s-result .actions { margin-top: 8px; gap: 5px; }
+  #s-result .actions .again { padding: 11px 30px; font-size: 13px; }
+  #s-result .actions .save { padding: 13px 30px; font-size: 14px; }
   #s-result .actions .btn.ghost { padding: 8px 15px; font-size: 12px; }
 }
 @media (max-height: 600px) {
   .hero-ride { width: min(140px, 40%); }
-  #s-result .actions .again { padding: 10px 28px; font-size: 13px; }
-  #s-result .actions .save { padding: 8px 20px; font-size: 11.5px; }
+  #s-result .actions .again { padding: 10px 26px; font-size: 12.5px; }
+  #s-result .actions .save { padding: 12px 26px; font-size: 13px; }
   #s-result .badge { display: none; }   /* NEW BEST 배지는 공간이 없으면 포기 */
   .game-name { display: none; }
 }
@@ -4329,7 +4356,7 @@ const STR = {
   // 인스타 계정명을 그대로 쓰라고 했으니 오타를 고칠 길이 있어야 한다
   editName: 'Edit Name',
   // 점수 카드를 1080×1350(4:5) 그림으로 저장 — 인스타에 올릴 때 잘리지 않는 비율
-  saveCard: 'SAVE SCORE CARD',
+  saveCard: 'Share on Instagram',
   saveWait: 'SAVING…',
   saveDone: 'SAVED!',
   saveShared: 'SHARED!',
@@ -4338,7 +4365,7 @@ const STR = {
   cta: {
     head: 'WIN THE MLB 26FW COLLECTION',
     steps: [
-      'Save this score card',
+      "Click 'Share on Instagram' below.",
       'Post it on Instagram',
       'Follow our MLB account',
       'Tag {tag}',
@@ -5593,9 +5620,13 @@ async function boot() {
     screens.nickname.show(profile.nickname, 'edit');
   }
 
+  let taps = 0;   // 입력이 실제로 들어온 횟수 — 터치 검사(tools/check_touch.py)가 이걸 본다
   const input = createInput($('#game'), (e) => {
     audio.unlock();
-    if (mode === 'play' && !bot) pending.push(e);
+    if (mode === 'play' && !bot) {
+      pending.push(e);
+      taps++;
+    }
   });
 
   async function startRun() {
@@ -5792,7 +5823,7 @@ async function boot() {
         run.cat.grounded = false;
         run.cat.airTicks = 0;
       },
-      state: () => ({ mode, tick: run.tick, x: run.cat.x, y: run.cat.y, grounded: run.cat.grounded,
+      state: () => ({ mode, taps, tick: run.tick, x: run.cat.x, y: run.cat.y, grounded: run.cat.grounded,
         invuln: run.invuln, over: run.over, lives: run.lives, stage: run.score.stage }),
     };
   }
