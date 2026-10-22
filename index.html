@@ -250,30 +250,46 @@ button { font-family: inherit; color: inherit; }
 
 /* PLAY AGAIN — 메탈릭 핑크. 결과 화면에서 제일 먼저 누르고 싶게 만든다. */
 #s-result .actions .again {
-  position: relative; overflow: hidden; border: 0; color: #fff;
-  background: linear-gradient(135deg, #FFC2D2 0%, #FF86A9 26%, #FFE1EA 44%, #EF5E8C 60%, #FF9FBD 82%, #F7749C 100%);
-  text-shadow: 0 1px 2px rgba(150, 40, 70, 0.38);
-  box-shadow: 0 10px 22px rgba(226, 98, 140, 0.42),
-              inset 0 1.5px 0 rgba(255, 255, 255, 0.8),
-              inset 0 -2px 6px rgba(186, 58, 98, 0.35);
+  position: relative; overflow: hidden; border: 0; color: #8A2B4F;
+  /* 밝은 쪽으로만 모은 핑크 — 위에서 빛이 들어오고 가운데 흰 띠가 금속처럼 번쩍인다 */
+  background: linear-gradient(180deg,
+    #FFFFFF 0%, #FFE2EC 12%, #FFB4D0 34%, #FFF2F7 50%, #FF9FC2 68%, #FFCADF 86%, #FFEFF5 100%);
+  text-shadow: 0 1.5px 0 rgba(255, 255, 255, 0.95);
+  box-shadow: 0 10px 24px rgba(255, 150, 190, 0.55),
+              0 0 0 2px rgba(255, 255, 255, 0.9) inset,
+              0 2px 4px rgba(255, 255, 255, 0.95) inset,
+              0 -3px 8px rgba(255, 158, 196, 0.5) inset;
 }
 /* 금속처럼 빛이 훑고 지나간다 */
 #s-result .actions .again::after {
   content: ''; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(105deg, transparent 36%, rgba(255, 255, 255, 0.82) 48%, transparent 60%);
-  transform: translateX(-130%); animation: sheen 3.2s ease-in-out infinite;
+  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.55) 42%,
+              #FFFFFF 50%, rgba(255, 255, 255, 0.55) 58%, transparent 70%);
+  transform: translateX(-130%); animation: sheen 2.6s ease-in-out infinite;
 }
 @keyframes sheen {
   0%, 58% { transform: translateX(-130%); }
   88%, 100% { transform: translateX(130%); }
 }
 
+/* SAVE SCORE CARD — 참여에 꼭 필요한 버튼이라 PLAY AGAIN 다음으로 눈에 띄게.
+   반짝임은 넣지 않아 주인공 버튼과 구분된다. */
+#s-result .actions .save {
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFEAF2 26%, #FFC8DE 52%, #FFF4F8 70%, #FFD7E7 100%);
+  color: #96305A; padding: 13px 30px; font-size: 14px; letter-spacing: 0.14em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.95),
+              inset 0 -2px 6px rgba(255, 170, 205, 0.6),
+              0 6px 16px rgba(255, 160, 196, 0.45);
+}
+
 /* 아래 두 버튼 — 같은 결이되 한참 차분하게 */
 #s-result .actions .btn.ghost {
-  background: linear-gradient(135deg, #FFF7F9 0%, #FFE6EE 55%, #FFF1F5 100%);
-  color: #AE5570; box-shadow: inset 0 0 0 1.5px rgba(226, 98, 140, 0.4),
-                              inset 0 1px 0 rgba(255, 255, 255, 0.9),
-                              0 4px 10px rgba(226, 98, 140, 0.18);
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFF0F5 40%, #FFDCE9 72%, #FFF6F9 100%);
+  color: #A03E64; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.95),
+              inset 0 -2px 5px rgba(255, 183, 212, 0.55),
+              0 4px 12px rgba(255, 170, 200, 0.4);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -415,10 +431,15 @@ button { font-family: inherit; color: inherit; }
   .cta-steps { gap: 2px; margin-top: 5px; }
   .cta-head { padding-bottom: 5px; }
   .cta-foot { margin-top: 5px; }
-  #s-result .actions { padding-top: 6px; gap: 6px; }
+  #s-result .actions { margin-top: 10px; gap: 6px; }
+  #s-result .actions .again { padding: 11px 32px; font-size: 14px; }
+  #s-result .actions .save { padding: 9px 24px; font-size: 12.5px; }
+  #s-result .actions .btn.ghost { padding: 8px 15px; font-size: 12px; }
 }
 @media (max-height: 600px) {
-  .hero-ride { width: min(170px, 46%); }
+  .hero-ride { width: min(140px, 40%); }
+  #s-result .actions .again { padding: 10px 28px; font-size: 13px; }
+  #s-result .actions .save { padding: 8px 20px; font-size: 11.5px; }
   #s-result .badge { display: none; }   /* NEW BEST 배지는 공간이 없으면 포기 */
   .game-name { display: none; }
 }
@@ -4307,11 +4328,17 @@ const STR = {
   changeMeow: 'Change Meow',
   // 인스타 계정명을 그대로 쓰라고 했으니 오타를 고칠 길이 있어야 한다
   editName: 'Edit Name',
+  // 점수 카드를 1080×1350(4:5) 그림으로 저장 — 인스타에 올릴 때 잘리지 않는 비율
+  saveCard: 'SAVE SCORE CARD',
+  saveWait: 'SAVING…',
+  saveDone: 'SAVED!',
+  saveShared: 'SHARED!',
+  saveBlocked: 'OPEN IN SAFARI TO SAVE',
   // 결과 카드 아래 — 캡처해서 올리게 만드는 블록. {tag} 는 result.js 가 CONFIG.HASHTAG 로 바꿔 넣는다.
   cta: {
     head: 'WIN THE MLB 26FW COLLECTION',
     steps: [
-      'Screenshot this score card',
+      'Save this score card',
       'Post it on Instagram',
       'Follow our MLB account',
       'Tag {tag}',
@@ -4844,6 +4871,234 @@ function createSledPick({ assets, getProfile, onPick, onNext, onBack }) {
   Object.assign(__exports, { createSledPick });
 
   };
+  __defs['ui/scorecard.js'] = function (__exports, __req) {
+// 점수 카드를 1080×1350(4:5) 그림 한 장으로 그려 폰에 저장한다.
+//
+// 화면을 캡처하는 게 아니라 **따로 그린다**. 그래야 폰 크기와 상관없이 항상 같은 그림이 나오고,
+// 인스타 피드 세로 최대 비율(4:5)에 맞아 잘리지 않는다.
+// 바깥 라이브러리를 쓰지 않으므로 **인터넷 없이** 동작한다 — 매장 기계에서도 된다.
+const { CONFIG } = __req('config.js');
+const { STR, fmt } = __req('strings.js');
+const { drawSled, sledHeight, seatAnchor, sledMeta } = __req('render/sled.js');
+const W = 1080;
+const H = 1350;            // 4:5 — 인스타 피드에 잘리지 않는 가장 큰 세로 비율
+const INK = '#3A3330';
+const INK_70 = 'rgba(58,51,48,.72)';
+const INK_50 = 'rgba(58,51,48,.5)';
+const BLUSH = '#C98B8B';
+const SANS = '-apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif';
+
+const font = (weight, size) => `${weight} ${size}px ${SANS}`;
+
+function roundRect(g, x, y, w, h, r) {
+  g.beginPath();
+  g.moveTo(x + r, y);
+  g.arcTo(x + w, y, x + w, y + h, r);
+  g.arcTo(x + w, y + h, x, y + h, r);
+  g.arcTo(x, y + h, x, y, r);
+  g.arcTo(x, y, x + w, y, r);
+  g.closePath();
+}
+
+/**
+ * 자간을 띄워 가운데 정렬로 그린다.
+ * 한 글자씩 끊어 그리면 I 처럼 좁은 글자에서 간격이 튀어 'WIN' 이 'W N' 으로 보인다.
+ * → 브라우저가 letterSpacing 을 지원하면 그걸 쓰고, 아니면 자간 없이 통째로 그린다.
+ */
+function tracked(g, text, cx, y, track) {
+  const can = 'letterSpacing' in g;
+  if (can) g.letterSpacing = `${track}px`;
+  g.textAlign = 'center';
+  g.fillText(text, cx, y);
+  if (can) g.letterSpacing = '0px';
+}
+
+function centered(g, text, cx, y) {
+  g.textAlign = 'center';
+  g.fillText(text, cx, y);
+}
+
+function sky(g) {
+  const grad = g.createLinearGradient(0, 0, 0, H);
+  grad.addColorStop(0, '#A9DEFF');
+  grad.addColorStop(0.42, '#D8F0FF');
+  grad.addColorStop(0.72, '#F2FBFF');
+  grad.addColorStop(1, '#FFFFFF');
+  g.fillStyle = grad;
+  g.fillRect(0, 0, W, H);
+
+  // 눈언덕 두 겹
+  g.fillStyle = 'rgba(255,255,255,.75)';
+  g.beginPath();
+  g.ellipse(W * 0.22, H * 1.02, W * 0.62, H * 0.2, 0, 0, Math.PI * 2);
+  g.fill();
+  g.fillStyle = '#FFFFFF';
+  g.beginPath();
+  g.ellipse(W * 0.78, H * 1.05, W * 0.66, H * 0.2, 0, 0, Math.PI * 2);
+  g.fill();
+
+  // 눈발 — 자리는 고정 (같은 점수면 같은 그림이 나오게)
+  let seed = 7;
+  const rnd = () => ((seed = (seed * 9301 + 49297) % 233280) / 233280);
+  g.fillStyle = 'rgba(255,255,255,.85)';
+  for (let i = 0; i < 46; i++) {
+    const r = 3 + rnd() * 9;
+    g.beginPath();
+    g.arc(rnd() * W, rnd() * H * 0.82, r, 0, Math.PI * 2);
+    g.fill();
+  }
+}
+
+function hero(g, assets, profile, cx, baseY, widthPx) {
+  g.save();
+  g.translate(cx, baseY);
+  const seat = seatAnchor(profile.sled, sledHeight(assets, profile.sled, widthPx), widthPx);
+  const cat = assets.cats[profile.cat];
+  const h = widthPx * 0.52;
+  const w = h * cat.aspect;
+  const rider = () => g.drawImage(cat.front, seat.x - w / 2, seat.y - h * cat.seat, w, h);
+  const vehicle = () => drawSled(g, assets, profile.sled, widthPx);
+  if (sledMeta(profile.sled).inside) { rider(); vehicle(); } else { vehicle(); rider(); }
+  g.restore();
+}
+
+function ctaPanel(g, top) {
+  const pad = 120;
+  const w = W - pad * 2;
+  const steps = STR.cta.steps.map((s) => s.replace('{tag}', CONFIG.HASHTAG));
+  const headH = 64;
+  const rowH = 52;
+  const h = headH + steps.length * rowH + 62;
+
+  g.save();
+  g.fillStyle = INK;
+  roundRect(g, pad, top, w, h, 34);
+  g.fill();
+
+  g.fillStyle = '#FFFFFF';
+  g.font = font(900, 34);
+  g.textBaseline = 'alphabetic';
+  tracked(g, STR.cta.head, W / 2, top + 46, 1.5);
+
+  g.strokeStyle = 'rgba(255,255,255,.22)';
+  g.lineWidth = 2;
+  g.beginPath();
+  g.moveTo(pad + 34, top + headH + 2);
+  g.lineTo(pad + w - 34, top + headH + 2);
+  g.stroke();
+
+  steps.forEach((s, i) => {
+    const y = top + headH + 40 + i * rowH;
+    g.fillStyle = BLUSH;
+    g.beginPath();
+    g.arc(pad + 54, y - 9, 17, 0, Math.PI * 2);
+    g.fill();
+    g.fillStyle = '#FFFFFF';
+    g.font = font(900, 20);
+    g.textAlign = 'center';
+    g.fillText(String(i + 1), pad + 54, y - 2);
+    g.textAlign = 'left';
+    g.font = font(700, 28);
+    g.fillStyle = s.includes(CONFIG.HASHTAG) ? '#FFD9E2' : '#FFFFFF';
+    g.fillText(s, pad + 86, y);
+  });
+
+  g.fillStyle = 'rgba(255,255,255,.72)';
+  g.font = font(700, 23);
+  g.textAlign = 'center';
+  g.fillText(STR.cta.foot, W / 2, top + h - 24);
+  g.restore();
+  return h;
+}
+
+/** 결과 한 판을 1080×1350 캔버스에 그린다. */
+function drawScoreCard({ assets, logoImg, result, stage, profile, endedAt }) {
+  const c = document.createElement('canvas');
+  c.width = W;
+  c.height = H;
+  const g = c.getContext('2d');
+  g.textBaseline = 'alphabetic';
+  sky(g);
+
+  // 세로 자리는 고정으로 잡는다. 썰매 그림 높이는 대략 가로폭의 0.9 배라,
+  // 이걸 잘못 잡으면 위 로고를 덮는다 (실제로 한 번 덮었다).
+  if (logoImg && logoImg.complete && logoImg.naturalWidth) {
+    const lh = 58;
+    const lw = lh * (logoImg.naturalWidth / logoImg.naturalHeight);
+    g.drawImage(logoImg, (W - lw) / 2, 74, lw, lh);
+  }
+  g.fillStyle = INK_50;
+  g.font = font(800, 22);
+  tracked(g, CONFIG.TITLE, W / 2, 168, 7);
+
+  const HERO_W = 430;                 // 그려지는 높이 ≈ 390
+  hero(g, assets, profile, W / 2, 582, HERO_W);
+
+  g.fillStyle = INK;
+  g.font = font(800, 48);
+  centered(g, profile.nickname || '', W / 2, 650);
+
+  g.fillStyle = INK_50;
+  g.font = font(800, 22);
+  tracked(g, STR.score, W / 2, 694, 8);
+
+  g.fillStyle = INK;
+  g.font = font(900, 136);
+  centered(g, fmt(result.points), W / 2, 812);
+
+  g.fillStyle = INK_70;
+  g.font = font(600, 29);
+  centered(g, `${fmt(result.distance)} ${STR.meters}  ·  ${result.items + result.rares} ${STR.items}  ·  ${result.spins} ${STR.spins}`, W / 2, 862);
+
+  g.fillStyle = result.finished ? BLUSH : INK;
+  g.font = font(900, 27);
+  tracked(g, result.finished ? STR.finishTitle : `${STR.fellAt} ${STR.stageLabel(stage.number, stage.name)}`, W / 2, 912, 2.5);
+
+  const at = endedAt instanceof Date ? endedAt : new Date();
+  g.fillStyle = INK_50;
+  g.font = font(800, 22);
+  tracked(g, result.finished ? `${STR.finished} · ${STR.stamp(at)}` : STR.stamp(at), W / 2, 952, 2);
+
+  ctaPanel(g, 992);
+  return c;
+}
+
+/**
+ * 폰에 저장한다. 아이폰은 공유 시트(저장·인스타 바로 보내기), 안드로이드·PC 는 바로 내려받기.
+ * 돌려주는 값: 'shared' | 'downloaded' | 'cancelled' | 'blocked'
+ */
+async function saveCanvas(canvas, filename) {
+  const blob = await new Promise((res) => canvas.toBlob(res, 'image/png'));
+  if (!blob) return 'blocked';
+
+  // 아이폰 사파리는 download 속성이 잘 안 먹는다 → 공유 시트가 정답이다
+  try {
+    const file = new File([blob], filename, { type: 'image/png' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({ files: [file], title: CONFIG.TITLE });
+      return 'shared';
+    }
+  } catch (e) {
+    if (e && e.name === 'AbortError') return 'cancelled';
+  }
+
+  const a = document.createElement('a');
+  if ('download' in a) {
+    const url = URL.createObjectURL(blob);
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 10_000);
+    return 'downloaded';
+  }
+  return 'blocked';   // 인스타 앱 내장 브라우저 등 — 길게 눌러 저장하라고 안내한다
+}
+
+  Object.assign(__exports, { drawScoreCard, saveCanvas });
+
+  };
   __defs['ui/result.js'] = function (__exports, __req) {
 // 결과 화면 = 인스타 스토리 캡처 한 장. 핵심 정보는 화면 높이 14%~80% 사이에 둔다.
 const { $, showEl, hideEl, onTap } = __req('ui/dom.js');
@@ -4851,7 +5106,12 @@ const { CONFIG } = __req('config.js');
 const { STR, fmt } = __req('strings.js');
 const { drawSled, sledHeight, seatAnchor, sledMeta } = __req('render/sled.js');
 const { ICONS } = __req('ui/icons.js');
+const { drawScoreCard, saveCanvas } = __req('ui/scorecard.js');
 function createResult({ assets, onAgain, onChange, onEditName }) {
+  // 점수 카드 그림에 쓸 로고 — 미리 읽어 둔다 (저장 누를 때 비어 있으면 안 된다)
+  const logoImg = new Image();
+  logoImg.src = assets.logo;
+  let last = null;   // 마지막 판 — 저장 버튼이 이걸로 그림을 그린다
   const root = $('#s-result');
   root.innerHTML = `
     <div class="card">
@@ -4875,11 +5135,32 @@ function createResult({ assets, onAgain, onChange, onEditName }) {
     </div>
     <div class="actions">
       <button class="btn again">${STR.playAgain}</button>
+      <button class="btn save">${STR.saveCard}</button>
       <div class="row"><button class="btn ghost editname">${STR.editName}</button><button class="btn ghost change">${STR.changeMeow}</button></div>
     </div>`;
   onTap($('.again', root), onAgain);
+  onTap($('.save', root), saveCard);
   onTap($('.editname', root), onEditName);
   onTap($('.change', root), onChange);
+
+  let busy = false;
+  async function saveCard() {
+    if (busy || !last) return;
+    busy = true;
+    const btn = $('.save', root);
+    const label = STR.saveCard;
+    btn.textContent = STR.saveWait;
+    try {
+      const canvas = drawScoreCard({ assets, logoImg, ...last });
+      const how = await saveCanvas(canvas, 'MLB_SAVE_THE_WHITE_CHRISTMAS.png');
+      btn.textContent = how === 'shared' ? STR.saveShared
+        : how === 'downloaded' ? STR.saveDone
+        : how === 'cancelled' ? label : STR.saveBlocked;
+    } catch (e) {
+      btn.textContent = STR.saveBlocked;
+    }
+    setTimeout(() => { btn.textContent = label; busy = false; }, 2200);
+  }
 
   const hero = $('.hero-ride', root);
   function drawHero(profile) {
@@ -4909,6 +5190,7 @@ function createResult({ assets, onAgain, onChange, onEditName }) {
   }
 
   function show({ result, newBest, stage, rank, profile, endedAt }) {
+    last = { result, stage, profile, endedAt };
     drawHero(profile);
     $('.badge', root).classList.toggle('hidden', !newBest);
     $('.score', root).textContent = fmt(result.points);
